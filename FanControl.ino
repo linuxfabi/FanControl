@@ -10,7 +10,8 @@ int fanPWM     = 9;
 int fanSpeed   = 1;
 
 void setup() {
-  // Set Pins 2-9
+  // Set PinModes (2-9)
+  TCCR1B = TCCR1B & 0b11111000 | 0x01; // Set Timer1 (Pin 9 and 10) to 31300Hz
   pinMode(upButton,   INPUT_PULLUP);
   pinMode(downButton, INPUT_PULLUP);
   pinMode(led1,        OUTPUT);
