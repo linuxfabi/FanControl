@@ -46,12 +46,12 @@ void loop() {
     if (fanSpeed<1)  fanSpeed = 1;
   } else {
     if (!digitalRead(autoButton)) automatic = false; delay(300);
-    temp = (int)dht.readTemperature();
-    if      (temp <= 23) fanLevel = 1;
-    else if (temp <= 26) fanLevel = 2;
-    else if (temp <  29) fanLevel = 3;
-    else if (temp >  32) fanLevel = 4;
-    else if (temp >  35) fanLevel = 5;
+    //temp = (int)dht.readTemperature();
+    if      (temp <= 23) fanSpeed = 1;
+    else if (temp <= 26) fanSpeed = 2;
+    else if (temp <  29) fanSpeed = 3;
+    else if (temp >  32) fanSpeed = 4;
+    else if (temp >  35) fanSpeed = 5;
   }
 
   // Ledwork
