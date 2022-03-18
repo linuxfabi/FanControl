@@ -10,11 +10,7 @@ int led4       = 7;
 int led5       = 8;
 int fanPWM     = 9;
 int fanSpeed   = 1;
-bool dhtMode   = false; // set manual to true to add atomaticmode with DHT and AutoButton
-bool automatic = false;
-int dhtPin     = 10;
-int autoButton = 11;
-int temp       = 0;
+
 
 void setup() {
   // Set PinModes (2-9)
@@ -27,32 +23,16 @@ void setup() {
   pinMode(led4,        OUTPUT);
   pinMode(led5,        OUTPUT);
   pinMode(fanPWM,      OUTPUT);
-
-  if (dhtMode) {
-    pinMode(autoButton, INPUT_PULLUP);
-    DHT dht(dhtPin, DHT11);
-    dht.begin();
-    pinMode(10, INPUT);
-  }
 }
 
 void loop() {
   // Buttonwork
-  if (!automatic) {
-    if (!digitalRead(autoButton) && dhtMode) automatic = true; delay(300);
-    if (!digitalRead(upButton))              fanSpeed++;       delay(300);
-    if (!digitalRead(downButton))            fanSpeed--;       delay(300);
-    if (fanSpeed>5)  fanSpeed = 5;
-    if (fanSpeed<1)  fanSpeed = 1;
-  } else {
-    if (!digitalRead(autoButton)) automatic = false; delay(300);
-    //temp = (int)dht.readTemperature();
-    if      (temp <= 23) fanSpeed = 1;
-    else if (temp <= 26) fanSpeed = 2;
-    else if (temp <  29) fanSpeed = 3;
-    else if (temp >  32) fanSpeed = 4;
-    else if (temp >  35) fanSpeed = 5;
-  }
+  if (!digitalRead(autoButton) && dhtMode) automatic = true; delay(300);
+  if (!digitalRead(upButton))              fanSpeed++;       delay(300);
+  if (!digitalRead(downButton))            fanSpeed--;       delay(300);
+  if (fanSpeed>5)  fanSpeed = 5;
+  if (fanSpeed<1)  fanSpeed = 1;
+
 
   // Ledwork
   if (fanSpeed >= 1) digitalWrite(led1, HIGH);
