@@ -1,8 +1,8 @@
 #include "DHT.h"
 
 // init vars
-int upButton   = 2;
-int downButton = 3;
+int upButton   = 10;
+int downButton = 11;
 int led1       = 4;
 int led2       = 5;
 int led3       = 6;
@@ -23,17 +23,25 @@ void setup() {
   pinMode(led4,        OUTPUT);
   pinMode(led5,        OUTPUT);
   pinMode(fanPWM,      OUTPUT);
+
+  //Serial.begin(9600);
 }
 
 void loop() {
   // Buttonwork
-  if (!digitalRead(autoButton) && dhtMode) automatic = true; delay(300);
-  if (!digitalRead(upButton))              fanSpeed++;       delay(300);
-  if (!digitalRead(downButton))            fanSpeed--;       delay(300);
+  if (!digitalRead(upButton)) {
+    fanSpeed++;
+    delay(300);
+  }
+  if (!digitalRead(downButton)) {
+    fanSpeed--;
+    delay(300);
+  }
   if (fanSpeed>5)  fanSpeed = 5;
-  if (fanSpeed<1)  fanSpeed = 1;
+  if (fanSpeed<0)  fanSpeed = 0;
 
-
+  //Serial.println(fanSpeed);
+  
   // Ledwork
   if (fanSpeed >= 1) digitalWrite(led1, HIGH);
   else digitalWrite(led1, LOW);
